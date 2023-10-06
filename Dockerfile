@@ -1,26 +1,31 @@
-# Base image
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04
+FROM runpod/pytorch:1.13.0-py3.10-cuda11.7.1-devel
 
 ENV DEBIAN_FRONTEND=noninteractive
+ARG HUGGING_FACE_HUB_TOKEN
+ENV HUGGING_FACE_HUB_TOKEN=$HUGGING_FACE_HUB_TOKEN
 
 # Use bash shell with pipefail option
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Set the working directory
-WORKDIR /
+WORKDIR /workspace
 
-# Update and upgrade the system packages (Worker Template)
-COPY builder/setup.sh /setup.sh
-RUN /bin/bash /setup.sh && \
-    rm /setup.sh
 
-# Install Python dependencies (Worker Template)
+# Install required packages
+RUN apt-get update && apt-get install -y python3-pip
+RUN apt-get update && apt-get install -y git
+# Install required packages
+
+# Test with abov
 COPY builder/requirements.txt /requirements.txt
-RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
-    rm /requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r /requirements.txt && \
+    rm /requirements.txt \ 
+    && pip install --no-cache-dir "oneflow" -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117
 
-# Add src files (Worker Template)
-ADD src .
+# Download the training script
 
-CMD python3 -u /handler.py
+# RUN accelerate config default
+
+# ADD src .
+
+CMD ["bash", "-c"]

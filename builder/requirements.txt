@@ -2,3 +2,7 @@
 # Reccomended to lock the version number to avoid unexpected changes.
 
 runpod==1.2.0
+torch
+transformers==4.27.1
+diffusers[torch]==0.19.3
+onediff
