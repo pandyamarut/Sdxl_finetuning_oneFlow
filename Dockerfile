@@ -19,8 +19,10 @@ RUN apt-get update && apt-get install -y git
 COPY builder/requirements.txt /requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r /requirements.txt && \
-    rm /requirements.txt \ 
-    && pip install --no-cache-dir "oneflow" -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117
+    rm /requirements.txt
+
+
+RUN pip install --pre oneflow -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117
 
 # Download the training script
 
