@@ -28,5 +28,4 @@ RUN pip uninstall accelerate -y
 
 
 ADD src .
-
-CMD ["python", "-u", "/handler.py"]
+CMD ["bash", "-c", "python -u handler.py"]
