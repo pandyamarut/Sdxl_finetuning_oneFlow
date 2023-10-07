@@ -3,12 +3,8 @@
 
 import runpod
 import subprocess
+import os
 
-import torch
-# import oneflow as flow
-from pathlib import Path
-from onediff.infer_compiler import oneflow_compile
-from diffusers import StableDiffusionXLPipeline
 
 # Load models into VRAM here so they can be warm between requests
 
@@ -73,6 +69,11 @@ def handler(job):
     install_oneflow()
 
     try:
+        import torch
+        # import oneflow as flow
+        from pathlib import Path
+        from onediff.infer_compiler import oneflow_compile
+        from diffusers import StableDiffusionXLPipeline
         pretrained_model_name_or_path = "stabilityai/stable-diffusion-xl-base-1.0"
 
         prompt = "A little white dog playing on the sea floor, the sun shining in, swimming some beautiful Colorful goldfish, bubbles，by Yang J, pixiv contest winner, furry art, falling star on the background, bubbly underwater scenery, the cutest kitten ever, beautiful avatar pictures"
