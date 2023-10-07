@@ -1,4 +1,4 @@
-FROM runpod/pytorch:1.13.0-py3.10-cuda11.7.1-devel
+FROM oneflowinc/onediff:cu117
 
 ENV DEBIAN_FRONTEND=noninteractive
 ARG HUGGING_FACE_HUB_TOKEN
@@ -22,11 +22,12 @@ RUN pip install --upgrade pip && \
     rm /requirements.txt
 
 
+
+RUN pip install --pre oneflow -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117
+
 RUN pip uninstall accelerate -y
 
-# RUN pip install --pre oneflow -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117
+# Download the training script
 
-
-ADD src .
-
-CMD ["python", "-u", "/handler.py"]
+# RUN accelerate config default
+CMD ["bash", "-c", "pip install --pre oneflow -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117"]
