@@ -16,14 +16,16 @@ def huggingface_login():
 
         if token:
             # Run the huggingface-cli login command with the TOKEN environment variable
-            subprocess.run(["huggingface-cli", "login", "--token", token], check=True)
+            subprocess.run(["huggingface-cli", "login",
+                           "--token", token], check=True)
 
             # If the command was successful, you can print a success message or perform other actions
             print("Hugging Face login successful!")
 
         else:
             # Handle the case where the TOKEN environment variable is not set
-            print("TOKEN environment variable is not set. Please set it before running the command.")
+            print(
+                "TOKEN environment variable is not set. Please set it before running the command.")
 
     except subprocess.CalledProcessError as e:
         # If the command failed, you can print an error message or handle the error as needed
@@ -55,11 +57,8 @@ def install_oneflow():
         # Other unexpected errors
         print(f"An error occurred: {e}")
 
-def handler(job):
-    '''
-    This is the handler function that will be called by the serverless.
-    '''
 
+def handler(job):
     job_input = job["input"]
     print(job_input)
 
@@ -107,5 +106,6 @@ def handler(job):
         # do the things
         # return the output that you want to be returned like pre-signed URLs to output artifacts
         return {"output": "output"}
+
 
 runpod.serverless.start({"handler": handler})
